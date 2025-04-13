@@ -1,0 +1,106 @@
+# This project was generated with 0.3.22 using template: https://github.com/beeware/briefcase-template@v0.3.22
+[tool.briefcase]
+project_name = "SMP Manager"
+bundle = "com.smp"
+version = "0.0.1"
+url = "https://smp.com/smp"
+license.file = "LICENSE"
+author = "Yazan Kh"
+author_email = "yazankhdaj1@gmaill.com"
+
+[tool.briefcase.app.smp]
+formal_name = "SMP"
+description = "Studints Manager Project"
+long_description = """This Sofrware to Manager Studints and Teachers and 
+their classes with their courses and,
+their marks and their grades and, 
+their absences and their attendances.
+"""
+sources = [
+    "src/smp",
+]
+test_sources = [
+    "tests",
+]
+
+requires = [
+    # Add your cross-platform app requirements here
+]
+test_requires = [
+    # Add your cross-platform test requirements here
+]
+
+[tool.briefcase.app.smp.macOS]
+universal_build = true
+requires = [
+    # Add your macOS-specific app requirements here
+]
+
+[tool.briefcase.app.smp.linux]
+requires = [
+    # Add your Linux-specific app requirements here
+]
+
+[tool.briefcase.app.smp.linux.system.debian]
+system_requires = [
+    # Add any system packages needed at build the app here
+]
+
+system_runtime_requires = [
+    # Add any system packages needed at runtime here
+]
+
+[tool.briefcase.app.smp.linux.system.rhel]
+system_requires = [
+    # Add any system packages needed at build the app here
+]
+
+system_runtime_requires = [
+    # Add any system packages needed at runtime here
+]
+
+[tool.briefcase.app.smp.linux.system.suse]
+system_requires = [
+    # Add any system packages needed at build the app here
+]
+
+system_runtime_requires = [
+    # Add any system packages needed at runtime here
+]
+
+[tool.briefcase.app.smp.linux.system.arch]
+system_requires = [
+    # Add any system packages needed at build the app here
+]
+
+system_runtime_requires = [
+    # Add any system packages needed at runtime here
+]
+
+[tool.briefcase.app.smp.linux.flatpak]
+flatpak_runtime = "org.freedesktop.Platform"
+flatpak_runtime_version = "24.08"
+flatpak_sdk = "org.freedesktop.Sdk"
+
+[tool.briefcase.app.smp.windows]
+requires = [
+    # Add your Windows-specific app requirements here
+]
+
+# Mobile deployments
+[tool.briefcase.app.smp.iOS]
+requires = [
+    # Add your iOS-specific app requirements here
+]
+
+[tool.briefcase.app.smp.android]
+requires = [
+    # Add your Android-specific app requirements here
+]
+
+# Web deployments
+[tool.briefcase.app.smp.web]
+requires = [
+    # Add your web-specific app requirements here
+]
+
