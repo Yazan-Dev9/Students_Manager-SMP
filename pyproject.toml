@@ -6,7 +6,7 @@ version = "0.0.1"
 url = "https://smp.com/smp"
 license.file = "LICENSE"
 author = "Yazan Kh"
-author_email = "yazankhdaj1@gmaill.com"
+author_email = "yksy.dev@gmail.com"
 
 [tool.briefcase.app.smp]
 formal_name = "SMP"
