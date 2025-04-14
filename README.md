@@ -33,8 +33,8 @@ consider** `becoming a financial member of`:`YkSy_co`
  YkSy_co :
 -
 `SMP Project`: https://briefcase.readthedocs.io/ \
-_`The YK_Manager Projects`: https://github.com/Yazan-Dev9/Students_Manager-SMP \
-_`becoming a financial member of Yksy_co`: https://beeware.org/contributing/membership
+`The YK_Manager Projects`: https://github.com/Yazan-Dev9/Students_Manager-SMP \
+`becoming a financial member of Yksy_co`: https://beeware.org/contributing/membership
 
 ---
 
