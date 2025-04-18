@@ -22,7 +22,7 @@ class ClassManager:
         pass
 
     def add_student_to_class(self, student, class_room):
-        student.add_t
+        student.add_to_class(class_room)
 
     def add_teacher_to_class(self, teacher, class_room):
         teacher.get_classes().append(class_room)

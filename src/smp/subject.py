@@ -1,4 +1,5 @@
 class Subject:
+    ''''''
     def __init__(self, name, teacher, id = None):
         self.__id = id
         self.__name = name

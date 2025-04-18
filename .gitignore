@@ -49,13 +49,18 @@ var/
 .installed.cfg
 *.egg
 .vscode/
+.qodo/
+
 
 # IntelliJ Idea family of suites
 .idea
 *.iml
+info/
+
 ## File-based project format:
 *.ipr
 *.iws
+
 ## mpeltonen/sbt-idea plugin
 .idea_modules/
 

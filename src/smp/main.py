@@ -2,6 +2,10 @@ from datetime import date
 from person import Gender
 from classManager import ClassManager
 from classRoom import ClassRoom
+from teacherManager import TeacherManager
+from teacher import Teacher
+from subject import Subject
+from subjectManager import SubjectManager
 from student import Student
 from studentManager import StudentManager
 
@@ -40,7 +44,6 @@ def main():
     student2.add_grade(45)
     student2.add_grade(70)
 
-
     class_manager.create_class(room)
     class_manager.create_class(room1)
 
@@ -52,6 +55,45 @@ def main():
     student_manager.add_student(student1)
     student_manager.add_student(student2)
 
+    teacher1 = Teacher("Johanson smeth")
+    teacher1.set_gender(Gender.MALE)
+    teacher1.set_address("123 Main St")
+    teacher1.set_phone_number("555-1234")
+    teacher1.set_email("JS@example.com")
+    teacher1.set_date_of_birth(date(1998, 5, 15))
+
+    teacher2 = Teacher("max JJ doel")
+    teacher2.set_gender(Gender.MALE)
+    teacher2.set_address("123 Main St")
+    teacher2.set_phone_number("555-1234")
+    teacher2.set_email("MD@example.com")
+    teacher2.set_date_of_birth(date(1988, 5, 15))
+
+    teacher_manager = TeacherManager()
+
+    teacher_manager.create_teacher(teacher1)
+    teacher_manager.create_teacher(teacher2)
+
+    subject1 = Subject("Math",teacher1)
+    subject1.get_attendance_hours = 12 # type: ignore
+    subject1.add_student(student1)
+    subject1.add_student(student2)
+    subject1.set_resources("book")
+    subject1.set_resources("pen")
+    subject1.get_total_grades = 100 # type: ignore
+
+    subject2 = Subject("History",teacher2)
+    subject2.get_attendance_hours = 20 # type: ignore
+    subject2.add_student(student1)
+    subject2.add_student(student)
+    subject2.set_resources("book 1")
+    subject2.set_resources("pen 2")
+    subject2.get_total_grades = 600 # type: ignore
+
+    subject_manager = SubjectManager()
+
+    subject_manager.create_subject(subject1)
+    subject_manager.create_subject(subject2)
 
 
     # Add grades to students
@@ -102,7 +144,37 @@ def main():
     if students_by_class:
         print("found students in class")
         for student in students_by_class:
-            print(student.get_name())
+            print(f"Name : {student.get_name()}")
     else:
         print("No students found for the given class.")
     print("--------------------------------")
+
+    # show all subjects
+    all_subjects = subject_manager.get_subjects()
+    print("All Subjects:")
+    for subject in all_subjects:
+        print(f"Subject: {subject.get_name()}, Teacher: {subject.get_teacher().get_age()}")
+        print("Students:")
+        for student in subject.get_students():
+            print(f"Name: {student.get_name()}")
+        print("Resources:")
+        for resource in subject.get_resources():
+            print(f"Resource: {resource}")
+        print("--------------------------------")
+        print("=======================================")
+
+    #get all studint in subject
+    students_in_subject = subject1.get_students()
+    print("Students in Subject:")
+    for student in students_in_subject:
+        print(f"Name: {student.get_name()}")
+    print("--------------------------------")
+    print("=======================================")
+
+    #get all resources in subject
+    resources_in_subject = subject1.get_resources()
+    print("Resources in Subject:")
+    for resource in resources_in_subject:
+        print(f"Resource: {resource}")
+        print("--------------------------------")
+        print("=======================================")
