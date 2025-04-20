@@ -95,7 +95,6 @@ def main():
     subject_manager.create_subject(subject1)
     subject_manager.create_subject(subject2)
 
-
     # Add grades to students
     student_manager.get_student_by_name("Alice").add_grade(95) # type: ignore
 
