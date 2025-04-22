@@ -1,12 +1,12 @@
 from datetime import date
 from person import Gender
 from classManager import ClassManager
-from classRoom import ClassRoom
+from smp.module.classRoome.classRoom import ClassRoom
 from teacherManager import TeacherManager
-from teacher import Teacher
-from subject import Subject
+from smp.module.teacher import Teacher
+from smp.module.subject import Subject
 from subjectManager import SubjectManager
-from student import Student
+from smp.module.student import Student
 from studentManager import StudentManager
 
 def main():

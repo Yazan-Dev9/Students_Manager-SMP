@@ -1,8 +1,8 @@
 import unittest
 from datetime import date
-from src.smp.student import Student
+from smp.module.student import Student
 from src.smp.studentManager import StudentManager
-from src.smp.classRoom import ClassRoom
+from smp.module.classRoomoom import ClassRoom
 
 class TestStudentManager(unittest.TestCase):
     def setUp(self):

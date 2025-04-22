@@ -1,8 +1,8 @@
 import unittest
-from src.smp.teacher import Teacher
+from smp.module.teacher import Teacher
 from src.smp.classManager import ClassManager
-from src.smp.classRoom import ClassRoom
-from src.smp.student import Student
+from smp.module.classRoomoom import ClassRoom
+from smp.module.student import Student
 
 
 class TestClassManagerMore(unittest.TestCase):

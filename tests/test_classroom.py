@@ -1,5 +1,5 @@
 import unittest
-from src.smp.classRoom import ClassRoom
+from smp.module.classRoomoom import ClassRoom
 
 class TestClassRoom(unittest.TestCase):
     def setUp(self):

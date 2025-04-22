@@ -1,4 +1,4 @@
-from subject import Subject
+from smp.module.subject import Subject
 
 class SubjectManager:
     ''''''

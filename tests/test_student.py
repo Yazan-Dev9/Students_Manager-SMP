@@ -1,6 +1,6 @@
 import unittest
 from datetime import date
-from src.smp.student import Student
+from smp.module.student import Student
 
 class TestStudent(unittest.TestCase):
     def setUp(self):

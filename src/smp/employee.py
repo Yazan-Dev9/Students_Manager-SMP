@@ -93,8 +93,8 @@ class Employee(Person):
     def get_employment_certificate(self):
         return self.__employment_certificate
 
-    def __str__(self):
-        return f"Employee ID: {self.get_id()}, {self.get_name()}, Age: {self.get_age()} ,Salary: {self.__salary}, Position: {self.__position}, Employment Status: {self.__employment_status}, Employment Type: {self.__employment_type}, Employment Start Date: {self.__employment_start_date}, Employment End Date: {self.__employment_end_date}, Employment Duration: {self.__employment_duration}, Employment Department: {self.__employment_department}, Employment Certificate: {self.__employment_certificate}"
+    # def __str__(self):
+    #     return f"Employee ID: {self.get_id()}, {self.get_name()}, Age: {self.get_age()} ,Salary: {self.__salary}, Position: {self.__position}, Employment Status: {self.__employment_status}, Employment Type: {self.__employment_type}, Employment Start Date: {self.__employment_start_date}, Employment End Date: {self.__employment_end_date}, Employment Duration: {self.__employment_duration}, Employment Department: {self.__employment_department}, Employment Certificate: {self.__employment_certificate}"
 
     # def calculate_salary(self):
     #     return self.__salary * self.__working_hours
