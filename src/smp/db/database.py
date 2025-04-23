@@ -1,0 +1,117 @@
+import sqlite3
+
+def create_database(db_name="school.db"):
+    conn = sqlite3.connect(db_name)
+    cursor = conn.cursor()
+
+    # Enable foreign key support
+    cursor.execute("PRAGMA foreign_keys = ON;")
+
+    # Create tables
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS Role (
+        role_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        role_name TEXT NOT NULL UNIQUE
+    );
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS User (
+        user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT NOT NULL UNIQUE,
+        password TEXT NOT NULL,
+        role_id INTEGER NOT NULL,
+        full_name TEXT NOT NULL,
+        FOREIGN KEY (role_id) REFERENCES Role(role_id)
+    );
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS Classroom (
+        classroom_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL UNIQUE,
+        capacity INTEGER
+    );
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS Subject (
+        subject_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL UNIQUE,
+        description TEXT
+    );
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS Teacher (
+        teacher_id INTEGER PRIMARY KEY,
+        FOREIGN KEY (teacher_id) REFERENCES User(user_id)
+    );
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS Student (
+        student_id INTEGER PRIMARY KEY,
+        enrollment_date DATE,
+        class_id INTEGER,
+        full_name TEXT NOT NULL,
+        mother TEXT NOT NULL,
+        gender TEXT CHECK(gender IN ('Male', 'Female')) NOT NULL,
+        public_number TEXT UNIQUE,
+        date_of_birth DATE,
+        address TEXT,
+        phone TEXT,
+        FOREIGN KEY (class_id) REFERENCES Classroom(classroom_id)
+    );
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS Exam (
+        exam_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        subject_id INTEGER NOT NULL,
+        exam_date DATE NOT NULL,
+        description TEXT,
+        FOREIGN KEY (subject_id) REFERENCES Subject(subject_id)
+    );
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS Grade (
+        grade_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        student_id INTEGER NOT NULL,
+        exam_id INTEGER NOT NULL,
+        grade TEXT NOT NULL,
+        FOREIGN KEY (student_id) REFERENCES Student(student_id),
+        FOREIGN KEY (exam_id) REFERENCES Exam(exam_id)
+    );
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS Attendance (
+        attendance_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        student_id INTEGER NOT NULL,
+        date DATE NOT NULL,
+        status TEXT CHECK(status IN ('Present', 'Absent', 'Late', 'Excused')) NOT NULL,
+        FOREIGN KEY (student_id) REFERENCES Student(student_id)
+    );
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS Timetable (
+        timetable_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        classroom_id INTEGER NOT NULL,
+        subject_id INTEGER NOT NULL,
+        day_of_week TEXT CHECK(day_of_week IN ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')),
+        start_time TIME NOT NULL,
+        end_time TIME NOT NULL,
+        FOREIGN KEY (classroom_id) REFERENCES Classroom(classroom_id),
+        FOREIGN KEY (subject_id) REFERENCES Subject(subject_id)
+    );
+    """)
+
+    conn.commit()
+    conn.close()
+    print(f"Database '{db_name}' created with all tables.")
+
+if __name__ == "__main__":
+    create_database()

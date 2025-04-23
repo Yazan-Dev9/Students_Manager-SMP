@@ -8,7 +8,7 @@ class Status(Enum):
     ABSENT = "Absent"
     LATE = "Late"
     @classmethod
-    def get_all_types(cls):
+    def get_all_status(cls):
         return [cls.PRESENT, cls.ABSENT, cls.LATE]
 
 
