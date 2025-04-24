@@ -1,4 +1,4 @@
-from person import Person
+from modules.person import Person
 
 class Student(Person):
     """
@@ -17,9 +17,9 @@ class Student(Person):
         set_classes(classes): Sets the list of classes for the student.
         get_classes(): Returns the list of classes the student is enrolled in.
     """
-    def __init__(self, name: str, id: str = ""):
+    def __init__(self, name: str = "", id: str = ""):
         super().__init__(name, id)
-        self.__grade: str
+        self.__grade: str = ""
         #region
         # self.__classes = None
         # self.__average = 0.0
@@ -31,6 +31,9 @@ class Student(Person):
 
     def set_grade(self, grade: str):
         self.__grade = grade
+
+    def save(self):
+        pass
 
     #region
     # def add_grade(self, grade):

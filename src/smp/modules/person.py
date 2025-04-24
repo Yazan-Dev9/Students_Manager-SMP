@@ -24,8 +24,8 @@ class Gender(Enum):
         MALE (str): Represents the male gender.
         FEMALE (str): Represents the female gender.
     """
-    MALE = "Male"
-    FEMALE = "Female"
+    MALE = "male"
+    FEMALE = "female"
 
     @classmethod
     def get_all_genders(cls):
@@ -45,7 +45,7 @@ class Person:
     Methods provide getter and setter access to personal attributes such as 
     name, parents, age, gender, contact details, and date of birth.
     """
-    def __init__(self, name: str, id : str = ""):
+    def __init__(self, name: str = "", id : str = ""):
         self.__id: str = id
         self.__name:str  = name
         self.__mother_name: str = ""

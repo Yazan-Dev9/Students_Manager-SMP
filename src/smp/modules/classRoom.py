@@ -1,6 +1,6 @@
 class ClassRoom:
     ''''''
-    def __init__(self, name: str, id: str = ""):
+    def __init__(self, name: str = "", id: str = ""):
         self.__id = id
         self.__name = name
         self.__capacity: int = 0
@@ -26,3 +26,6 @@ class ClassRoom:
 
     def set_capacity(self, capacity: int):
         self.__capacity = capacity
+
+    def save(self):
+        pass

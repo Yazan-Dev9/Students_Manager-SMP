@@ -1,5 +1,5 @@
 # from employee import Employee
-from person import Person
+from modules.person import Person
 
 class Teacher(Person):
     """
@@ -13,8 +13,11 @@ class Teacher(Person):
     Methods provide functionality to:
     - Manage courses, classes, and subjects
     """
-    def __init__(self, name, id = None):
+    def __init__(self, name: str = "", id: str = ""):
         super().__init__(name, id = id)
+
+    def save(self):
+        pass
         
         #region
         # super().__init__(name, id = id)

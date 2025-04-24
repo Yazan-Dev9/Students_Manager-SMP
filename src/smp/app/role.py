@@ -9,6 +9,9 @@ class Role:
     def get_id(self):
         return self.__id
 
+    def set_id(self,id):
+        self.__id = id
+
     def get_name(self):
         return self.__name
 

@@ -1,6 +1,7 @@
 import sqlite3
+from app.role import RoleName
 
-def create_database(db_name="school.db"):
+def create_database(db_name):
     conn = sqlite3.connect(db_name)
     cursor = conn.cursor()
 
@@ -18,10 +19,10 @@ def create_database(db_name="school.db"):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS User (
         user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        full_name TEXT NOT NULL,
         username TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL,
         role_id INTEGER NOT NULL,
-        full_name TEXT NOT NULL,
         FOREIGN KEY (role_id) REFERENCES Role(role_id)
     );
     """)
@@ -44,19 +45,27 @@ def create_database(db_name="school.db"):
 
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS Teacher (
-        teacher_id INTEGER PRIMARY KEY,
+        teacher_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        full_name TEXT NOT NULL,
+        mother TEXT NOT NULL,
+        gender TEXT CHECK(gender IN ('male', 'female')) NOT NULL,
+        public_number TEXT UNIQUE,
+        date_of_birth DATE,
+        address TEXT,
+        phone TEXT,
+        email TEXT,
         FOREIGN KEY (teacher_id) REFERENCES User(user_id)
     );
     """)
 
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS Student (
-        student_id INTEGER PRIMARY KEY,
-        enrollment_date DATE,
+        student_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        enrollment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         class_id INTEGER,
         full_name TEXT NOT NULL,
         mother TEXT NOT NULL,
-        gender TEXT CHECK(gender IN ('Male', 'Female')) NOT NULL,
+        gender TEXT CHECK(gender IN ('male', 'female')) NOT NULL,
         public_number TEXT UNIQUE,
         date_of_birth DATE,
         address TEXT,
@@ -109,9 +118,12 @@ def create_database(db_name="school.db"):
     );
     """)
 
+    cursor.execute("INSERT INTO Role (role_name) VALUES (?) ",(RoleName.ADMIN.value,))
+    cursor.execute("INSERT INTO User (full_name,username,password,role_id) VALUES (?,?,?,?)",("Admin-Dev","dev","123",1))
+
     conn.commit()
     conn.close()
     print(f"Database '{db_name}' created with all tables.")
 
 if __name__ == "__main__":
-    create_database()
+    create_database("./src/smp/db/school.db")
