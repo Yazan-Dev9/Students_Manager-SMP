@@ -1,11 +1,12 @@
-from teacher import Teacher
+from modules.teacher import Teacher
 
 class Subject:
     ''''''
-    def __init__(self, name, teacher: Teacher, id: str = ""):
+    def __init__(self, name: str = "", id: str = ""):
         self.__id: str = id
-        self.__name = name
-        self.__teacher = teacher
+        self.__name: str = name
+        self.__teacher: Teacher
+        self.__description: str = ""
         #region
         # self.__teacher = teacher
         # self.__students = []
@@ -15,6 +16,9 @@ class Subject:
 
     def get_id(self):
         return self.__id
+
+    def set_id(self, id: str):
+        self.__id = id
 
     def set_name(self, name: str):
         self.__name = name
@@ -27,6 +31,12 @@ class Subject:
 
     def get_teacher(self):
         return self.__teacher
+
+    def get_description(self):
+        return self.__description
+
+    def set_description(self, description: str):
+        self.__description = description
 
 #region
     # def set_teacher(self, teacher):

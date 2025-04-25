@@ -14,10 +14,7 @@ class Teacher(Person):
     - Manage courses, classes, and subjects
     """
     def __init__(self, name: str = "", id: str = ""):
-        super().__init__(name, id = id)
-
-    def save(self):
-        pass
+        super().__init__(name,id)
         
         #region
         # super().__init__(name, id = id)

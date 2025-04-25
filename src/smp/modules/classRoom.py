@@ -1,8 +1,8 @@
 class ClassRoom:
     ''''''
     def __init__(self, name: str = "", id: str = ""):
-        self.__id = id
-        self.__name = name
+        self.__id: str = id
+        self.__name: str = name
         self.__capacity: int = 0
         self.__grade: str = ""
 
@@ -26,6 +26,3 @@ class ClassRoom:
 
     def set_capacity(self, capacity: int):
         self.__capacity = capacity
-
-    def save(self):
-        pass

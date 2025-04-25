@@ -7,6 +7,8 @@ from modules.teacher import Teacher
 from modules.person import Gender
 from modules.student import Student
 from modules.classRoom import ClassRoom
+from modules.subject import Subject
+from modules.exam import Exam, ExamType
 
 manager = Managment()
 
@@ -83,23 +85,23 @@ def get_info():
     info = {"name": name,
             "mother": mother,
             "gender": gender,
-            "date": birth_date,
+            "date": date.fromisoformat(birth_date),
             "address": address,
             "phone": phone_number,
         }
 
     return info
 
-def get_teacher_info():
+def get_all_teachers_info():
     info = get_info()
     email = input("Enter email: -> ")
     public_number = input("Enter public number: -> ")
 
-    teacher_info = {"email": email,
-                    "public": public_number
-                }
+    all_teachers_info = {"email": email,
+                        "public": public_number
+                    }
 
-    info.update(teacher_info)
+    info.update(all_teachers_info)
     
     return info
 
@@ -107,7 +109,7 @@ def set_info(obj, info):
     obj.set_name(str(info.get("name")))
     obj.set_mother_name(str(info.get("mother")))
     obj.set_gender(str(info.get("gender")))
-    obj.set_date_of_birth(date.fromisoformat(str(info.get("date"))))
+    obj.set_date_of_birth(date.fromisoformat(info.get("date")))
     obj.set_address(str(info.get("address")))
     obj.set_phone_number(str(info.get("phone")))
 
@@ -116,14 +118,14 @@ def add_teacher():
 
     teacher = Teacher()
 
-    info = get_teacher_info()
+    info = get_all_teachers_info()
 
     set_info(teacher,info)
 
     teacher.set_email(str(info.get("email")))
     teacher.set_public_number(str(info.get("public")))
 
-    teacher.save()
+    manager.save_teacher(teacher)
 
     print("Teacher Added Successfully")
 
@@ -152,22 +154,9 @@ def add_class_room():
 
     room.set_capacity(int(capacity))
 
-    room.save()
+    manager.save_class_room(room)
 
     print("Class Added Successfully")
-
-def admin_menu_board():
-    print("1. Add User")
-    print("2. Add Teacher")
-    print("3. Add Student")
-    print("4. Add Class Room")
-    print("5. Add Attendance")
-    print("6. Add Subject")
-    print("7. Add exam")
-    print("8. Add Exam Result")
-    print("9. Add Time Table")
-    print("10. Add Role")
-    print("0. Exit")
 
 def add_attendance():
     print("Add Attendance")
@@ -181,6 +170,119 @@ def add_role():
     manager.save_role(Role(name.lower()))
     
     print("Role Added Successfully")
+
+def get_teachers_list() -> list[Teacher] :
+    teacher = Teacher()
+    teachers : list[Teacher] = []
+
+    all_teachers = manager.get_all_teachers()
+
+    for all_teachers_info in all_teachers:
+        teacher.set_id(all_teachers_info[0])
+        teacher.set_name(all_teachers_info[1])
+        teacher.set_mother_name(all_teachers_info[2])
+        teacher.set_date_of_birth(all_teachers_info[5])
+        teacher.set_gender(all_teachers_info[3])
+        teacher.set_address(all_teachers_info[6])
+        teacher.set_phone_number(all_teachers_info[7])
+        teacher.set_email(all_teachers_info[8])
+        teacher.set_public_number(all_teachers_info[4])
+
+        teachers.append(teacher)
+    
+    return teachers
+
+def add_subject():
+    print("Add Subject")
+    
+    subject = Subject()
+    ids = []
+    id = 0
+    
+    subject.set_name(input("Enter subject name: -> "))
+
+    teachers = get_teachers_list()
+
+    while True:
+        print("Choose Teacher")
+
+        for teacher_data in teachers:
+            print(f"{teacher_data.get_id()} - {teacher_data.get_name().capitalize()}")
+            ids.append(teacher_data.get_id())
+
+        print("n - Create new Teacher")
+        choose = input("Enter choose number: -> ")
+
+        if choose.isdigit() or choose.lower() == "n":
+            break
+    
+    if choose == "n":
+        add_teacher()
+        id = ids[-1] + 1
+    else:
+        id = int(choose)
+
+    teacher_info = manager.get_teacher_by_id(id)
+
+    subject.set_teacher(Teacher(teacher_info[1], teacher_info[0]))
+
+    subject.set_description(input("Enter description (defult): -> "))
+
+    manager.save_subject(subject)
+
+    print("Subject Added Successfully")
+
+def add_exam():
+    print("Add Exam")
+
+    exam = Exam()
+
+    while True:
+        for i, type in enumerate(ExamType.get_all_types(), start=1):
+            print(f"{i} - {type.value}")
+
+        match int(input("Enter exam type (1,2,3): ->")):
+            case 1:
+                exam.set_type(ExamType.FINAL.value)
+                break
+            case 2:
+                exam.set_type(ExamType.MIDTERM.value)
+                break
+            case 3:
+                exam.set_type(ExamType.QUIZ.value)
+                break
+            case _:
+                print("Faild input")
+                continue
+
+    while(True):
+        exam_date = input("Enter exam date (YYYY-MM-DD): -> ")
+        try:
+            date.fromisoformat(exam_date)
+            break
+        except ValueError:
+            continue
+
+    exam.set_date(date.fromisoformat(exam_date))
+    exam.set_description(input("Enter description (defult): -> "))
+
+
+    manager.save_exam(exam)
+
+    print("Exam Added Successfully")
+
+def admin_menu_board():
+    print("1. Add User")
+    print("2. Add Teacher")
+    print("3. Add Student")
+    print("4. Add Class Room")
+    print("5. Add Attendance")
+    print("6. Add Subject")
+    print("7. Add exam")
+    print("8. Add Exam Result")
+    print("9. Add Time Table")
+    print("10. Add Role")
+    print("0. Exit")
 
 def admin():
     while(True):
@@ -203,10 +305,10 @@ def admin():
                 add_attendance()
                 break
             case 6:
-                print("Add Subject")
+                add_subject()
                 break
             case 7:
-                print("Add Exam")
+                add_exam()
                 break
             case 8:
                 print("Add Exam Result")

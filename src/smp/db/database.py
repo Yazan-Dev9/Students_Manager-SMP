@@ -23,6 +23,7 @@ def create_database(db_name):
         username TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL,
         role_id INTEGER NOT NULL,
+        recorded_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (role_id) REFERENCES Role(role_id)
     );
     """)
@@ -31,15 +32,19 @@ def create_database(db_name):
     CREATE TABLE IF NOT EXISTS Classroom (
         classroom_id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL UNIQUE,
-        capacity INTEGER
+        capacity INTEGER,
+        grade TEXT
     );
     """)
 
+# FIXME try to add class id to REFERENCES betweetn
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS Subject (
         subject_id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL UNIQUE,
-        description TEXT
+        teacher_id INTEGER NOT NULL,
+        description TEXT,
+        FOREIGN KEY (teacher_id) REFERENCES Teacher(teacher_id)
     );
     """)
 
@@ -54,7 +59,6 @@ def create_database(db_name):
         address TEXT,
         phone TEXT,
         email TEXT,
-        FOREIGN KEY (teacher_id) REFERENCES User(user_id)
     );
     """)
 
@@ -74,9 +78,11 @@ def create_database(db_name):
     );
     """)
 
+# FIXME try to add class id to REFERENCES betweetn
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS Exam (
         exam_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        type TEXT CHECK(type IN ('midterm', 'final', 'quiz')) NOT NULL,
         subject_id INTEGER NOT NULL,
         exam_date DATE NOT NULL,
         description TEXT,
