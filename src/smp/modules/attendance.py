@@ -1,6 +1,6 @@
 from datetime import date
 from enum import Enum
-from student import Student
+from modules.student import Student
 
 class Status(Enum):
     ''''''
@@ -14,27 +14,31 @@ class Status(Enum):
 
 class Attendance:
     ''''''
-    def __init__(self,status: str, id: str = ""):
-        self.__id: str = id
+    def __init__(self,status: str = "", id: int = 0):
+        self.__id: int = id
         self.__status: str = status
         self.__date : date
         self.__student: Student
 
+    @property
     def get_id(self):
         return self.__id
 
+    @property
     def get_status(self):
         return self.__status
 
     def set_status(self, status: str):
         self.__status = status
 
+    @property
     def get_date(self) -> date:
         return self.__date
 
     def set_date(self, date: date):
         self.__date = date
 
+    @property
     def get_student(self) -> Student:
         return self.__student
 

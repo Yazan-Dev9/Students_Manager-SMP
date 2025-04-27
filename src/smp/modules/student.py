@@ -1,4 +1,5 @@
 from modules.person import Person
+from modules.classRoom import ClassRoom
 
 class Student(Person):
     """
@@ -17,23 +18,29 @@ class Student(Person):
         set_classes(classes): Sets the list of classes for the student.
         get_classes(): Returns the list of classes the student is enrolled in.
     """
-    def __init__(self, name: str = "", id: str = ""):
+    def __init__(self, name: str = "", id: int = 0):
         super().__init__(name, id)
-        self.__grade: str = ""
+        self._grade: str = ""
+        self._class_room : ClassRoom
         #region
         # self.__classes = None
         # self.__average = 0.0
         # self.__attendance_hours = 0 
         #endregion
     
+    @property
     def get_grade(self):
-        return self.__grade
+        return self._grade
 
     def set_grade(self, grade: str):
-        self.__grade = grade
+        self._grade = grade
 
-    def save(self):
-        pass
+    @property
+    def get_class(self):
+        return self._class_room
+
+    def set_class(self, class_room: ClassRoom):
+        self._class_room = class_room
 
     #region
     # def add_grade(self, grade):

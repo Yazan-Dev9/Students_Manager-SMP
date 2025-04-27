@@ -45,8 +45,8 @@ class Person:
     Methods provide getter and setter access to personal attributes such as 
     name, parents, age, gender, contact details, and date of birth.
     """
-    def __init__(self, name: str = "", id : str = ""):
-        self.__id: str = id
+    def __init__(self, name: str = "", id : int = 0):
+        self.__id: int = id
         self.__name:str  = name
         self.__mother_name: str = ""
         self.__gender: str = ""
@@ -61,54 +61,63 @@ class Person:
         # self.__email = None
         #endregion
 
+    @property
     def get_id(self):
         return self.__id
 
-    def set_id(self, id: str):
+    def set_id(self, id: int):
         self.__id = id
 
+    @property
     def get_name(self):
         return self.__name
 
     def set_name(self, name: str):
         self.__name = name
 
+    @property
     def get_mother_name(self):
         return self.__mother_name
 
     def set_mother_name(self, mother_name: str):
         self.__mother_name = mother_name
 
+    @property
     def get_gender(self):
         return self.__gender
 
     def set_gender(self, gender: str):
         self.__gender = gender
 
+    @property
     def get_date_of_birth(self) -> date:
         return self.__date_of_birth
 
     def set_date_of_birth(self, date_of_birth: date):
         self.__date_of_birth = date_of_birth
 
+    @property
     def get_public_number(self):
         return self.__public_number
 
     def set_public_number(self, public_number: str):
         self.__public_number = public_number
 
+    @property
     def get_address(self):
         return self.__address
 
     def set_address(self, address: str):
         self.__address = address
 
+    @property
     def get_phone_number(self):
         return self.__phone_number
 
     def set_phone_number(self, phone_number: str):
         self.__phone_number = phone_number
 
+    @property
     def get_email(self):
         return self.__email
 

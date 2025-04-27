@@ -13,7 +13,7 @@ class Teacher(Person):
     Methods provide functionality to:
     - Manage courses, classes, and subjects
     """
-    def __init__(self, name: str = "", id: str = ""):
+    def __init__(self, name: str = "", id: int = 0):
         super().__init__(name,id)
         
         #region

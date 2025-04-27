@@ -1,6 +1,7 @@
 import sqlite3
 from app.role import RoleName
 
+
 def create_database(db_name):
     conn = sqlite3.connect(db_name)
     cursor = conn.cursor()
@@ -9,14 +10,17 @@ def create_database(db_name):
     cursor.execute("PRAGMA foreign_keys = ON;")
 
     # Create tables
-    cursor.execute("""
+    cursor.execute(
+        """
     CREATE TABLE IF NOT EXISTS Role (
         role_id INTEGER PRIMARY KEY AUTOINCREMENT,
         role_name TEXT NOT NULL UNIQUE
     );
-    """)
+    """
+    )
 
-    cursor.execute("""
+    cursor.execute(
+        """
     CREATE TABLE IF NOT EXISTS User (
         user_id INTEGER PRIMARY KEY AUTOINCREMENT,
         full_name TEXT NOT NULL,
@@ -26,29 +30,36 @@ def create_database(db_name):
         recorded_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (role_id) REFERENCES Role(role_id)
     );
-    """)
+    """
+    )
 
-    cursor.execute("""
+    cursor.execute(
+        """
     CREATE TABLE IF NOT EXISTS Classroom (
         classroom_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL UNIQUE,
-        capacity INTEGER,
-        grade TEXT
+        name TEXT NOT NULL,
+        division INTEGER,
+        capacity INTEGER
     );
-    """)
+    """
+    )
 
-# FIXME try to add class id to REFERENCES betweetn
-    cursor.execute("""
+    cursor.execute(
+        """
     CREATE TABLE IF NOT EXISTS Subject (
         subject_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL UNIQUE,
+        name TEXT NOT NULL,
         teacher_id INTEGER NOT NULL,
+        class_id INTEGER NOT NULL,
         description TEXT,
         FOREIGN KEY (teacher_id) REFERENCES Teacher(teacher_id)
+        FOREIGN KEY (class_id) REFERENCES Classroom(classroom_id)
     );
-    """)
+    """
+    )
 
-    cursor.execute("""
+    cursor.execute(
+        """
     CREATE TABLE IF NOT EXISTS Teacher (
         teacher_id INTEGER PRIMARY KEY AUTOINCREMENT,
         full_name TEXT NOT NULL,
@@ -58,11 +69,13 @@ def create_database(db_name):
         date_of_birth DATE,
         address TEXT,
         phone TEXT,
-        email TEXT,
+        email TEXT
     );
-    """)
+    """
+    )
 
-    cursor.execute("""
+    cursor.execute(
+        """
     CREATE TABLE IF NOT EXISTS Student (
         student_id INTEGER PRIMARY KEY AUTOINCREMENT,
         enrollment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -76,21 +89,25 @@ def create_database(db_name):
         phone TEXT,
         FOREIGN KEY (class_id) REFERENCES Classroom(classroom_id)
     );
-    """)
+    """
+    )
 
-# FIXME try to add class id to REFERENCES betweetn
-    cursor.execute("""
+    cursor.execute(
+        """
     CREATE TABLE IF NOT EXISTS Exam (
         exam_id INTEGER PRIMARY KEY AUTOINCREMENT,
         type TEXT CHECK(type IN ('midterm', 'final', 'quiz')) NOT NULL,
         subject_id INTEGER NOT NULL,
+        class_id INTEGER NOT NULL,
         exam_date DATE NOT NULL,
         description TEXT,
         FOREIGN KEY (subject_id) REFERENCES Subject(subject_id)
     );
-    """)
+    """
+    )
 
-    cursor.execute("""
+    cursor.execute(
+        """
     CREATE TABLE IF NOT EXISTS Grade (
         grade_id INTEGER PRIMARY KEY AUTOINCREMENT,
         student_id INTEGER NOT NULL,
@@ -99,9 +116,11 @@ def create_database(db_name):
         FOREIGN KEY (student_id) REFERENCES Student(student_id),
         FOREIGN KEY (exam_id) REFERENCES Exam(exam_id)
     );
-    """)
+    """
+    )
 
-    cursor.execute("""
+    cursor.execute(
+        """
     CREATE TABLE IF NOT EXISTS Attendance (
         attendance_id INTEGER PRIMARY KEY AUTOINCREMENT,
         student_id INTEGER NOT NULL,
@@ -109,9 +128,11 @@ def create_database(db_name):
         status TEXT CHECK(status IN ('Present', 'Absent', 'Late', 'Excused')) NOT NULL,
         FOREIGN KEY (student_id) REFERENCES Student(student_id)
     );
-    """)
+    """
+    )
 
-    cursor.execute("""
+    cursor.execute(
+        """
     CREATE TABLE IF NOT EXISTS Timetable (
         timetable_id INTEGER PRIMARY KEY AUTOINCREMENT,
         classroom_id INTEGER NOT NULL,
@@ -122,14 +143,14 @@ def create_database(db_name):
         FOREIGN KEY (classroom_id) REFERENCES Classroom(classroom_id),
         FOREIGN KEY (subject_id) REFERENCES Subject(subject_id)
     );
-    """)
+    """
+    )
 
-    cursor.execute("INSERT INTO Role (role_name) VALUES (?) ",(RoleName.ADMIN.value,))
-    cursor.execute("INSERT INTO User (full_name,username,password,role_id) VALUES (?,?,?,?)",("Admin-Dev","dev","123",1))
+    cursor.execute("INSERT INTO Role (role_name) VALUES (?) ", (RoleName.ADMIN.value,))
+    cursor.execute(
+        "INSERT INTO User (full_name,username,password,role_id) VALUES (?,?,?,?)",
+        ("Admin-Dev", "dev", "123", 1),
+    )
 
     conn.commit()
     conn.close()
-    print(f"Database '{db_name}' created with all tables.")
-
-if __name__ == "__main__":
-    create_database("./src/smp/db/school.db")
