@@ -1,20 +1,47 @@
 from modules.teacher import Teacher
 from modules.classRoom import ClassRoom
 
+
 class Subject:
-    ''''''
+    """
+    Represents a subject in an educational management system.
+
+    Attributes:
+        _id (int): Unique identifier for the subject.
+        _name (str): Name of the subject.
+        _teacher (Teacher): Teacher assigned to the subject.
+        _class_room (ClassRoom): Classroom associated with the subject.
+        _description (str): Description of the subject.
+
+    Methods provide getters and setters for managing subject properties.
+    """
+
     def __init__(self, subject_name: str = "", subject_id: int = 0):
+        """
+        Initialize a new Subject instance.
+
+        Args:
+            subject_name (str, optional): The name of the subject. Defaults to an empty string.
+            subject_id (int, optional): The unique identifier for the subject. Defaults to 0.
+
+        Attributes:
+            id (int): Stores the subject's unique identifier.
+            name (str): Stores the subject's name.
+            teacher (Teacher): Placeholder for the subject's assigned teacher.
+            class_room (ClassRoom): Placeholder for the classroom associated with the subject.
+            description (str): Stores the subject's description, initially empty.
+        """
         self._id: int = subject_id
         self._name: str = subject_name
         self._teacher: Teacher
-        self._class_room : ClassRoom
+        self._class_room: ClassRoom
         self._description: str = ""
-        #region
+        # region
         # self._teacher = teacher
         # self._students = []
         # self._attendance_hours = 0
         # self._resources = []
-        #endregion
+        # endregion
 
     @property
     def get_id(self):
@@ -48,34 +75,29 @@ class Subject:
     def get_class(self):
         return self._class_room
 
-    def set_class(self,class_room):
+    def set_class(self, class_room):
         self._class_room = class_room
 
-#region
-    # def set_teacher(self, teacher):
-    #     self._teacher = teacher
 
-    # def get_teacher(self):
-    #     return self._teacher
+# region
+# def add_student(self, student):
+#     self._students.append(student)
 
-    # def add_student(self, student):
-    #     self._students.append(student)
+# def get_students(self):
+#     return self._students
 
-    # def get_students(self):
-    #     return self._students
+# def set_attendance_hours(self, hours):
+#     self._attendance_hours = hours
 
-    # def set_attendance_hours(self, hours):
-    #     self._attendance_hours = hours
+# def get_attendance_hours(self):
+#     return self._attendance_hours
 
-    # def get_attendance_hours(self):
-    #     return self._attendance_hours
+# def set_resources(self, resource):
+#     self._resources.append(resource)
 
-    # def set_resources(self, resource):
-    #     self._resources.append(resource)
+# def get_resources(self):
+#     return self._resources
 
-    # def get_resources(self):
-    #     return self._resources
-
-    # def _str_(self):
-    #     return f"Subject ID: {self._id}, Name: {self._name} - Teacher: {self._teacher}"
-#endregion
+# def _str_(self):
+#     return f"Subject ID: {self._id}, Name: {self._name} - Teacher: {self._teacher}"
+# endregion

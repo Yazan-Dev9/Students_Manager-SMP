@@ -23,7 +23,6 @@ class DatabaseConnection:
         self.connection = sqlite3.connect(db_file)
         self.cursor = self.connection.cursor()
 
-
     def execute_query(self, query: str, params=None):
         """
         Executes a query with optional parameters and returns fetched results.

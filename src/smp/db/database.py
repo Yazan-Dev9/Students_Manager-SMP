@@ -3,6 +3,26 @@ from app.role import RoleName
 
 
 def create_database(db_name):
+    """
+    Create a SQLite database with predefined schema for a school management system.
+
+    This function establishes a database connection and creates tables for:
+    - Roles
+    - Users
+    - Classrooms
+    - Subjects
+    - Teachers
+    - Students
+    - Exams
+    - Grades
+    - Attendance
+    - Timetables
+
+    The function also inserts a default admin role and user for initial system setup.
+
+    Args:
+        db_name (str): The filename/path for the SQLite database to be created.
+    """
     conn = sqlite3.connect(db_name)
     cursor = conn.cursor()
 
@@ -112,7 +132,7 @@ def create_database(db_name):
         grade_id INTEGER PRIMARY KEY AUTOINCREMENT,
         student_id INTEGER NOT NULL,
         exam_id INTEGER NOT NULL,
-        grade TEXT NOT NULL,
+        score FLOAT NOT NULL,
         FOREIGN KEY (student_id) REFERENCES Student(student_id),
         FOREIGN KEY (exam_id) REFERENCES Exam(exam_id)
     );

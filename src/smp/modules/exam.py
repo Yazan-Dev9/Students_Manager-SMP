@@ -4,32 +4,23 @@ from modules.subject import Subject
 from modules.classRoom import ClassRoom
 
 
-class ExamType(Enum):
-    """
-    Enumeration representing types of exams.
-    """
-
-    MIDTERM = "midterm"
-    FINAL = "final"
-    QUIZ = "quiz"
-
-    @classmethod
-    def get_all_types(cls):
-        """
-        Returns a list of all possible exam types.
-
-        :return: List of ExamType members
-        """
-        return [cls.MIDTERM, cls.FINAL, cls.QUIZ]
-
-
 class Exam:
     """
-    Represents an exam with attributes like id, type, date, description, and subject.
-    Provides getter and setter methods to access and modify these attributes.
+    Represents an exam in the academic management system.
+
+    This class encapsulates details about an exam, including its unique identifier, type,
+    date, description, associated subject, and classroom.
+
+    Attributes:
+        _id (int): Unique identifier for the exam.
+        _type (str): Type of the exam (e.g., 'midterm', 'final', 'quiz').
+        _date (date): Date when the exam is scheduled.
+        _description (str): Additional details or notes about the exam.
+        _subject (Subject): Subject associated with the exam.
+        _class (ClassRoom): Classroom where the exam will be conducted.
     """
 
-    def __init__(self, exam_type: str = "", exam_id: str = ""):
+    def __init__(self, exam_type: str = "", id: int = 0):
         """
         Initializes an Exam instance.
 
@@ -37,7 +28,7 @@ class Exam:
             exam_type (ExamType as str) : The type of the exam (e.g., 'midterm', 'final', 'quiz')
             exam_id (str) : Unique identifier for the exam
         """
-        self._id: str = exam_id
+        self._id: int = id
         self._type: str = exam_type
         self._date: date
         self._description = ""
@@ -45,7 +36,7 @@ class Exam:
         self._class: ClassRoom
 
     @property
-    def get_id(self) -> str:
+    def get_id(self):
         """
         Returns the unique identifier of the exam.
 
@@ -126,7 +117,7 @@ class Exam:
         """
         Returns the class associated with the exam.
 
-        :return: ClssRoom instance
+        :return: ClassRoom instance
         """
         return self._class
 
@@ -137,3 +128,25 @@ class Exam:
         :param class_room: ClassRoom instance
         """
         self._class = class_room
+
+
+class ExamType(Enum):
+    """
+    Represents different types of exams in the system.
+
+    This enumeration defines the possible exam types such as midterm, final, and quiz.
+    Provides a method to retrieve all available exam types.
+    """
+
+    MIDTERM = "midterm"
+    FINAL = "final"
+    QUIZ = "quiz"
+
+    @classmethod
+    def get_all_types(cls):
+        """
+        Returns a list of all possible exam types.
+
+        :return: List of ExamType members
+        """
+        return [cls.MIDTERM, cls.FINAL, cls.QUIZ]

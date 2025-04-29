@@ -1,33 +1,32 @@
 from modules.person import Person
 from modules.classRoom import ClassRoom
 
+
 class Student(Person):
     """
-    A Student class that extends the Person class, representing a student with grades and classes.
+    Represents a student in the school management system, inheriting from the Person class.
 
     Attributes:
-        __grades (list): A private list of the student's grades.
-        __classes (list): A private list of classes the student is enrolled in.
-        __average (float): A private attribute storing the student's grade average.
+        grade (str): The grade level of the student.
+        class_room (ClassRoom): The classroom assigned to the student.
 
     Methods:
-        add_grade(grade): Adds a grade to the student's grades and recalculates the average.
-        get_grades(): Returns the list of grades.
-        get_average(): Returns the student's grade average.
-        __calculate_average(): Calculates and updates the student's grade average.
-        set_classes(classes): Sets the list of classes for the student.
-        get_classes(): Returns the list of classes the student is enrolled in.
+        get_grade: Property to retrieve the student's grade.
+        set_grade: Method to set the student's grade.
+        get_class: Property to retrieve the student's classroom.
+        set_class: Method to assign a classroom to the student.
     """
     def __init__(self, name: str = "", id: int = 0):
+        """"""
         super().__init__(name, id)
         self._grade: str = ""
-        self._class_room : ClassRoom
-        #region
+        self._class_room: ClassRoom
+        # region
         # self.__classes = None
         # self.__average = 0.0
-        # self.__attendance_hours = 0 
-        #endregion
-    
+        # self.__attendance_hours = 0
+        # endregion
+
     @property
     def get_grade(self):
         return self._grade
@@ -42,14 +41,14 @@ class Student(Person):
     def set_class(self, class_room: ClassRoom):
         self._class_room = class_room
 
-    #region
+    # region
     # def add_grade(self, grade):
     #     self.__grades.append(grade)
     #     # self.__calculate_average()
 
     # def get_grades(self):
     #     return self.__grades
-    
+
     # def get_classes(self):
     #     return self.__classes
 
@@ -73,4 +72,4 @@ class Student(Person):
 
     # def __str__(self):
     #     return f"Student ID: {self.get_id()}, Student: {self.get_name()}, Average: {self.get_average()}"
-    #endregion
+    # endregion

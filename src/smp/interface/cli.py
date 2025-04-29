@@ -12,7 +12,7 @@ from modules.subject import Subject
 from modules.exam import Exam, ExamType
 from modules.attendance import Attendance, Status
 
-import pudb
+# import pudb
 
 
 manager = Management()
@@ -36,7 +36,7 @@ def login():
 
             role = manager.get_role_by_id(result[0][4])
 
-            user.set_role(Role(role[0][1], str(role[0][0])))
+            user.set_role(Role(role[0][1], role[0][0]))
 
             return user
         else:
@@ -86,7 +86,7 @@ def get_info():
         try:
             date.fromisoformat(birth_date)
             break
-        except ValueError as error:
+        except ValueError:
             continue
 
     address = input("Enter address: -> ")
@@ -156,7 +156,8 @@ def get_classes_list() -> list[ClassRoom]:
 
     return classes
 
-def get_students_in_class(class_id :int) -> list[Student]:
+
+def get_students_in_class(class_id: int) -> list[Student]:
     students: list[Student] = []
 
     all_students = manager.get_students_by_class(class_id)
@@ -179,7 +180,7 @@ def get_teachers_list() -> list[Teacher]:
     all_teachers = manager.get_all_teachers()
 
     for all_teachers_info in all_teachers:
-        teacher = Teacher( all_teachers_info[1],all_teachers_info[0])
+        teacher = Teacher(all_teachers_info[1], all_teachers_info[0])
         teacher.set_mother_name(all_teachers_info[2])
         teacher.set_gender(all_teachers_info[3])
         teacher.set_public_number(all_teachers_info[4])
@@ -226,7 +227,9 @@ def add_student():
         print("Choose Class")
 
         for class_data in classes:
-            print(f"{class_data.get_id} - {class_data.get_name.capitalize()} - number {class_data.get_division}")
+            print(
+                f"{class_data.get_id} - {class_data.get_name.capitalize()} - number {class_data.get_division}"
+            )
             ids.append(class_data.get_id)
 
         print("n - Create new class")
@@ -277,7 +280,7 @@ def add_class_room():
 
 def add_attendance():
     print("Add Attendance")
-    
+
     classes = get_classes_list()
 
     ids = [0]
@@ -286,7 +289,9 @@ def add_attendance():
         print("Choose Class")
 
         for class_data in classes:
-            print(f"{class_data.get_id} - {class_data.get_name.capitalize()} - number {class_data.get_division}")
+            print(
+                f"{class_data.get_id} - {class_data.get_name.capitalize()} - number {class_data.get_division}"
+            )
             ids.append(class_data.get_id)
 
         choose = input("Enter choose number: -> ")
@@ -300,19 +305,19 @@ def add_attendance():
 
     for student in students:
         print(f"{student.get_id} - {student.get_name.capitalize()}")
-        
+
         while True:
             print("Choose Status")
 
             for i, status in enumerate(Status.get_all_status(), start=1):
                 print(f"{i} - {status.value}")
                 ids.append(i)
-            
+
             choose = input("Enter choose number: -> ")
 
             if choose.isdigit() and int(choose) in ids:
                 break
-        
+
         attendance = Attendance()
 
         match int(choose):
@@ -330,7 +335,7 @@ def add_attendance():
                 break
             except ValueError:
                 continue
-        
+
         attendance.set_student(student)
         attendance.set_date(date.fromisoformat(attendance_date))
 
@@ -387,7 +392,9 @@ def add_subject():
         print("Choose Class")
 
         for class_data in classes:
-            print(f"{class_data.get_id} - {class_data.get_name.capitalize()} - number {class_data.get_division}")
+            print(
+                f"{class_data.get_id} - {class_data.get_name.capitalize()} - number {class_data.get_division}"
+            )
             ids.append(class_data.get_id)
 
         print("n - Create new class")
@@ -410,7 +417,7 @@ def add_subject():
 
     subject.set_class(ClassRoom(class_info.get_name, class_info.get_id))
 
-    subject.set_description(input("Enter description (defult): -> "))
+    subject.set_description(input("Enter description (default): -> "))
 
     manager.save_subject(subject)
 
@@ -438,7 +445,7 @@ def add_exam():
                 exam.set_type(ExamType.QUIZ.value)
                 break
             case _:
-                print("Faild input")
+                print("Failed input")
                 continue
 
     classes = get_classes_list()
@@ -504,7 +511,7 @@ def add_exam():
     exam.set_subject(Subject(subject_info.get_name, subject_info.get_id))
     exam.set_class(ClassRoom(class_info.get_name, class_info.get_id))
     exam.set_date(date.fromisoformat(exam_date))
-    exam.set_description(input("Enter description (defult): -> "))
+    exam.set_description(input("Enter description (default): -> "))
 
     manager.save_exam(exam)
 
@@ -513,23 +520,27 @@ def add_exam():
 
 def show_classes():
     classes = get_classes_list()
-    print("="*30)
+    print("=" * 30)
     for class_data in classes:
-        print(f"ID: {class_data.get_id} - Name: {class_data.get_name} - Division: {class_data.get_division} - Capacity: {class_data.get_capacity}")
-        print("="*30)
+        print(
+            f"ID: {class_data.get_id} - Name: {class_data.get_name} - Division: {class_data.get_division} - Capacity: {class_data.get_capacity}"
+        )
+        print("=" * 30)
 
 
 def show_subjects():
     subjects = get_subjects_list()
 
-    print("="*30)
+    print("=" * 30)
     for subject_data in subjects:
-        print(f"ID: {subject_data.get_id} Subject Name: {subject_data.get_name}")
+        print(f"ID: {subject_data.get_id} - Subject Name: {subject_data.get_name}")
         teacher = manager.get_teacher_by_id(int(subject_data.get_id))
         print(f"ID: {teacher.get_id} - Teacher Name: {teacher.get_name}")
         class_room = manager.get_class_by_id(int(subject_data.get_class.get_id))
-        print(f"ID: {class_room.get_id} - Class Name: {class_room.get_name } - Division: {class_room.get_division}")
-        print("="*30)
+        print(
+            f"ID: {class_room.get_id} - Class Name: {class_room.get_name } - Division: {class_room.get_division}"
+        )
+        print("=" * 30)
 
 
 def admin_menu_board():
@@ -555,37 +566,37 @@ def admin():
         match int(input("Enter Choose: -> ")):
             case 1:
                 add_user()
-                
+
             case 2:
                 add_teacher()
-                
+
             case 3:
                 add_student()
-                
+
             case 4:
                 add_class_room()
-                
+
             case 5:
                 add_attendance()
-                
+
             case 6:
                 add_subject()
-                
+
             case 7:
                 add_exam()
-                
+
             case 8:
                 print("Add Exam Result")
-                
+
             case 9:
                 print("Add Time Table")
-                
+
             case 10:
                 add_role()
-            
+
             case 11:
                 show_classes()
-            
+
             case 12:
                 show_subjects()
 
@@ -593,7 +604,7 @@ def admin():
                 print("EXIT")
                 exit(0)
             case _:
-                print("Faild Input")
+                print("Failed Input")
                 continue
 
 
